@@ -18,7 +18,6 @@
 #define LISTEN_NUM 12 //连接请求队列长度
 #define MSG_LEN 1024
 
-
 online_t *OnlineList;
 
 void * thread(void *arg){

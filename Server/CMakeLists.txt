@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(chatRoom_srv C)
+project(chatRoom_server C)
 
 set(CMAKE_C_STANDARD 11)
 
@@ -12,17 +12,20 @@ include_directories(/path/to/sqlite3/include)
 
 include_directories(include)
 
-add_executable(chatRoom_srv chatRoom_srv.c
+
+add_executable(chatRoom_server chatRoom_server.c
         service/connect.c
         include/commom/global.h
         common/common.c
         include/commom/common.h
         dao/db_connect.c
         include/dao/db_connect.h
+        service/accountSrv.c
+        dao/accountDao.c
 )
 
-install(FILES database/chatRoom.db DESTINATION database)
+file(COPY database/chatRoom.db DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/database)
 
 # 链接 SQLite3 库
-target_link_libraries(chatRoom_srv ${SQLITE3_LIBRARY})
-target_link_libraries(chatRoom_srv PRIVATE ${THREADS_LIBRARY})
+target_link_libraries(chatRoom_server ${SQLITE3_LIBRARY})
+target_link_libraries(chatRoom_server PRIVATE ${THREADS_LIBRARY})

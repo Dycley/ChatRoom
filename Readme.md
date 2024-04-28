@@ -1,14 +1,15 @@
 # chatRoom
 ## Introduction
-A multi-chatroom application based on Linux.
+A multi-chatroom application based on Linux.  
+[View the Project](https://github.com/Dycley/ChatRoom)
 
 ## Versions used
 - C11  
 - sqlite 3.45 
 - cmake 3.22
 
-## Getting Started
-### checking the Environment
+## Quick Start
+### Check the Environment
 1. install cmake  
      ```shell
      sudo apt-get install cmake
@@ -17,24 +18,24 @@ A multi-chatroom application based on Linux.
      ```shell
      sudo apt-get install libsqlite3-dev
      ```
-### building
-1. build
+### Build
+1. build  
+   From the top-level directory of the source (which contains this file), run:
     ```shell
-    cd chatRoom
     mkdir build
     cd build
     cmake ..
     make
     ```
-### Running
+### Run
 1. Run the server  
     ```shell
-    ./Server/chatRoom_srv
+    ./Server/chatRoom_server
     ```
 
 2. Run the client  
     ```shell
-    ./Client/chatRoom_cli
+    ./Client/chatRoom_client
     ```
 
    
