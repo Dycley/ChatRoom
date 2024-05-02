@@ -20,11 +20,11 @@ void db_connect(char *db_path) {
         fprintf(stderr, "Opened database successfully\n");
     }
 
-    Account_Register_By_Name_Pwd("Tom", "123");
-    int tmp=Account_Get_Uid_By_Name("Tom");
-    printf("%d\n",tmp);
-    char *tmpname= Account_Get_Name_By_Uid(2);
-    printf("%s\n",tmpname);
+//    Account_Register_By_Name_Pwd("Tom", "123");
+//    int tmp=Account_Get_Uid_By_Name("Tom");
+//    printf("%d\n",tmp);
+//    char *tmpname= Account_Get_Name_By_Uid(2);
+//    printf("%s\n",tmpname);
 }
 
 void db_close() {

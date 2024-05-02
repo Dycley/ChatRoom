@@ -7,6 +7,11 @@
 
 void error(const char *msg);
 
+/**
+ * 打印日志
+ * @param format
+ * @param ...
+ */
 void logs(const char *format, ...);
 
 /**
@@ -17,5 +22,27 @@ void logs(const char *format, ...);
  * @param format
  * @param ...
  */
-void print_colored(const char *color_code, const char *format, ...);
+void print_colored(const char* color_code, const char* format, ...);
+
+/**
+ * 清除输入缓冲区
+ */
+void clear_input_buffer();
+
+/**
+ * 控制终端回显
+ * @param enable
+ */
+void set_echo(int enable);
+
+/**
+ * 清除最后一行，'\\n'结尾
+ */
+void clean_last_line();
+
+/**
+ * 获取键盘输入
+ * @return 输入键ASCII码值
+ */
+int scanKeyboard();
 #endif //CHATROOM_COMMON_H

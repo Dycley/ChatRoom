@@ -5,6 +5,6 @@
 #ifndef CHATROOM_ACCOUNT_H
 #define CHATROOM_ACCOUNT_H
 
-
+int Account_Srv_Register(int sock_fd, const char *json);
 
 #endif //CHATROOM_ACCOUNT_H

@@ -22,9 +22,11 @@ add_executable(chatRoom_server chatRoom_server.c
         include/dao/db_connect.h
         service/accountSrv.c
         dao/accountDao.c
+        common/cJSON.c
 )
 
 file(COPY database/chatRoom.db DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/database)
+file(COPY logs/log.txt DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/log)
 
 # 链接 SQLite3 库
 target_link_libraries(chatRoom_server ${SQLITE3_LIBRARY})

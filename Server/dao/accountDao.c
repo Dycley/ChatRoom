@@ -12,25 +12,24 @@
 
 extern sqlite3 *db;
 
-int Account_Register_By_Name_Pwd(char *name, char *pwd){
+int Account_Register_By_Name_Pwd(const char *name, const char *password){
     sqlite3_stmt *res;
     char *sql = "INSERT into ACCOUNT(name, password)"\
                 "VALUES(@name, @password)";
     int rc = sqlite3_prepare_v2(db, sql, -1, &res, 0);
-
     if (rc == SQLITE_OK) {
         int idx;
         idx = sqlite3_bind_parameter_index(res, "@name");
         sqlite3_bind_text(res, idx, name, -1, SQLITE_STATIC);
         idx = sqlite3_bind_parameter_index(res, "@password");
-        sqlite3_bind_text(res, idx, pwd, -1, SQLITE_STATIC);
+        sqlite3_bind_text(res, idx, password, -1, SQLITE_STATIC);
     } else {
         fprintf(stderr, "Failed to execute statement: %s\n", sqlite3_errmsg(db));
     }
     rc = sqlite3_step(res);
     // 检查是否成功执行
     if (rc != SQLITE_DONE) {
-        printf("execute SQL error: %s\n", sqlite3_errmsg(db));
+        printf("Execute SQL error: %s\n", sqlite3_errmsg(db));
         sqlite3_finalize(res);
         return -1;
     } else {
@@ -60,7 +59,7 @@ int Account_Get_Uid_By_Name(char *name) {
     if (rc == SQLITE_ROW) {
         uid = sqlite3_column_int(res,0);
     } else {
-        printf("execute SQL error: %s\n", sqlite3_errmsg(db));
+        printf("Execute SQL error: %s\n", sqlite3_errmsg(db));
         sqlite3_finalize(res);
         return -1;
     }
@@ -91,7 +90,7 @@ char* Account_Get_Name_By_Uid(int uid) {
         name = malloc(strlen((const char *)temp_name) + 1);
         strcpy(name, (const char *)temp_name);
     } else {
-        printf("execute SQL error: %s\n", sqlite3_errmsg(db));
+        printf("Execute SQL error: %s\n", sqlite3_errmsg(db));
         sqlite3_finalize(res);
         return NULL;
     }

@@ -8,10 +8,10 @@
 /**
  * 注册用户，成功则返回0， 错误返回-1
  * @param name
- * @param pwd
+ * @param password
  * @return exec code
  */
-int Account_Register_By_Name_Pwd(char *name, char *pwd);
+int Account_Register_By_Name_Pwd(const char *name, const char *password);
 
 /**
  * 输入用户姓名，返回用户uid

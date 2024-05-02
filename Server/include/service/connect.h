@@ -6,5 +6,4 @@
 #define CHATROOM_CONNECT_H
 
     void connect_cli(int port);
-    void Connect();
 #endif //CHATROOM_CONNECT_H

@@ -4,9 +4,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/socket.h>
 #include <stdarg.h>
 #include <string.h>
-#include "commom/common.h"
+#include <termios.h>
+#include <unistd.h>
+#include "common/common.h"
 #include "time.h"
 
 #define MSG_LEN 1024
@@ -54,9 +57,11 @@ void logs(const char *format, ...) {
     }
 }
 
+
 //通用格式控制：0: 重置所有属性 1: 高亮/加粗 2: 暗淡 4: 下划线 5: 闪烁 7: 反转 8: 隐藏
 //前景色： 30: 黑色 31: 红色 32: 绿色 33: 黄色 34: 蓝色 35: 品红 36: 青色
 //背景色：40: 黑色 41: 红色 42: 绿色 43: 黄色 44: 蓝色 45: 品红 46: 青色
+
 void print_colored(const char *color_code, const char *format, ...) {
     if(!strcmp(color_code, "black")){
         color_code = "30";
@@ -80,3 +85,49 @@ void print_colored(const char *color_code, const char *format, ...) {
     printf("\033[0m");
     va_end(args);
 }
+
+
+void clear_input_buffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+
+}
+
+void set_echo(int enable) {
+    struct termios settings;
+    tcgetattr(STDIN_FILENO, &settings);
+    if (!enable) {
+        settings.c_lflag &= ~ECHO; // 关闭回显
+    } else {
+        settings.c_lflag |= ECHO;  // 打开回显
+    }
+    tcsetattr(STDIN_FILENO, TCSANOW, &settings);
+}
+
+
+
+void clean_last_line() {
+    printf("\033[A\033[2K\r");
+//    printf("\r");
+//    for (int i = 0; i < n; i++) {
+//        putchar(' ');
+//    }
+//    printf("\r");
+}
+
+
+int scanKeyboard() {
+    int in;
+    struct termios new_settings;
+    struct termios stored_settings;
+    tcgetattr(STDIN_FILENO, &stored_settings);
+    new_settings = stored_settings;
+    new_settings.c_lflag &= (~ICANON); // 设置终端为非规范模式
+    new_settings.c_cc[VTIME] = 0;
+    new_settings.c_cc[VMIN] = 1;
+    tcsetattr(STDIN_FILENO, TCSANOW, &new_settings);
+    in = getchar(); // 读取单个字符
+    tcsetattr(STDIN_FILENO, TCSANOW, &stored_settings); // 恢复设置
+    return in;
+}
+
