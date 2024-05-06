@@ -5,6 +5,7 @@
 #ifndef CHATROOM_COMMON_H
 #define CHATROOM_COMMON_H
 
+
 void error(const char *msg);
 
 /**

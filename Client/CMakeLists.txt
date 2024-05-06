@@ -10,9 +10,13 @@ add_executable(chatRoom_client chatRoom_client.c
         common/cJSON.c
         common/common.c
         view/hello_UI.c
-        view/hello_UI.h
+        include/view/hello_UI.h
         service/accountSrv.c
         include/service/accountSrv.h
+        view/account_UI.c
+        include/view/account_UI.h
+        service/service.c
+        include/service/service.h
 )
 
 file(COPY config.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

@@ -6,12 +6,12 @@
 #include <stdlib.h>
 #include "include/service/connect.h"
 #include "include/dao/db_connect.h"
-#include "commom/common.h"
+#include "common/common.h"
 
 int main(){
     printf("Hello Server\n");
     db_connect("database/chatRoom.db");
-//    db_close();
-    connect_cli(8888);
+    connect_client(8888);
+    db_close();
     return 0;
 }

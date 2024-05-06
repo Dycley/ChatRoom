@@ -18,4 +18,10 @@ void logs(const char *format, ...);
  * @param ...
  */
 void print_colored(const char *color_code, const char *format, ...);
+/**
+ * 对密码加密
+ * @param pwd
+ * @return 加密后字符串
+ */
+char *hash_pwd(const char *pwd);
 #endif //CHATROOM_COMMON_H

@@ -15,14 +15,18 @@ include_directories(include)
 
 add_executable(chatRoom_server chatRoom_server.c
         service/connect.c
-        include/commom/global.h
+        include/common/global.h
         common/common.c
-        include/commom/common.h
+        include/common/common.h
         dao/db_connect.c
         include/dao/db_connect.h
         service/accountSrv.c
         dao/accountDao.c
         common/cJSON.c
+        service/service.c
+        include/service/service.h
+        common/sha256.c
+        include/common/sha256.h
 )
 
 file(COPY database/chatRoom.db DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/database)

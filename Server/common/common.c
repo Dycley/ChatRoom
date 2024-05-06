@@ -6,8 +6,9 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
-#include "commom/common.h"
+#include "common/common.h"
 #include "time.h"
+#include "common/sha256.h"
 
 #define MSG_LEN 1024
 
@@ -79,4 +80,10 @@ void print_colored(const char *color_code, const char *format, ...) {
     vprintf(format, args);
     printf("\033[0m");
     va_end(args);
+}
+
+char* hash_pwd(const char *pwd) {
+    char *hash = malloc(65 * sizeof(char));
+    sha256_easy_hash_hex(pwd, strlen(pwd),hash);
+    return hash;
 }

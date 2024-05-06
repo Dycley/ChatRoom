@@ -14,6 +14,7 @@
 
 #define MSG_LEN 1024
 
+
 void error(const char *msg) {
     perror(msg);
     exit(1);

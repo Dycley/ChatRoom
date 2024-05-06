@@ -6,6 +6,6 @@
 #define CHATROOM_HELLO_UI_H
 
 void Hello_UI();
-void Register_UI();
+void Init_UI();
 
 #endif //CHATROOM_HELLO_UI_H

@@ -23,7 +23,7 @@ typedef struct online{
  * operation{type: MsgType,operation: string, args[...]}
  */
 enum MsgType {
-    WARNING, ERROR, INFO, MESSAGE, OPERATION
+    WARNING, ERROR, INFO, REQUEST, RESPONSE
 };
 
 #endif //CHATROOM_GLOBAL_H

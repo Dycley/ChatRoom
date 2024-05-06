@@ -14,55 +14,11 @@
 #include "common/common.h"
 #include "common/cJSON.h"
 #include "common/global.h"
+#include "service/service.h"
 
-#define MSG_LEN 1024
+//#define MSG_LEN 1024
 int sock_fd;
-//pthread_mutex_t mutex;
-//pthread_cond_t cond;
-extern int my_mutex;
-char message[MSG_LEN];
-
-void * thread(void *arg){
-    sock_fd=(int)(long)arg;
-    int recv_size, ret;
-    cJSON *root, *item;
-    while(1){
-        memset(message, 0, sizeof message);
-        recv_size = 0;
-        while(recv_size < MSG_LEN){
-            if((ret = recv(sock_fd ,message + recv_size ,MSG_LEN - recv_size,0)) <= 0){
-                fprintf(stderr, "\n服务器开小差了(；′⌒`)\n");
-                exit(0);
-            }
-            recv_size += ret;
-        }
-//        printf("%s\n",message);
-        root = cJSON_Parse(message);
-        item = cJSON_GetObjectItem(root,"type");
-        switch (item -> valueint) {
-            case ERROR:
-                item = cJSON_GetObjectItem(root,"content");
-                fprintf(stderr,"%s\n", cJSON_GetStringValue(item));
-                // 错误信息
-                break;
-            case WARNING:
-                item = cJSON_GetObjectItem(root,"content");
-                print_colored("yellow","%s\n",cJSON_GetStringValue(item));
-                // 警告信息
-                break;
-            case INFO:
-                item = cJSON_GetObjectItem(root,"content");
-                printf("%s\n",cJSON_GetStringValue(item));
-                // 通知信息
-                break;
-            default:
-                logs("Received undefined message: %s",message);
-                perror("Undefined message\n");
-        }
-    }
-    free(arg);
-    return NULL;
-}
+//char message[MSG_LEN];
 
 
 void connect_server(const char *host, int port) {
