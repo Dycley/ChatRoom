@@ -6,11 +6,32 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
+#include <pthread.h>
 #include "common/common.h"
 #include "time.h"
 #include "common/sha256.h"
 
 #define MSG_LEN 1024
+
+pthread_mutex_t mutex;
+
+void lock() {
+    pthread_mutex_lock(&mutex);
+}
+
+void unlock() {
+    pthread_mutex_unlock(&mutex);
+}
+
+// 初始化互斥锁
+int init_mutex() {
+    return pthread_mutex_init(&mutex, NULL);
+}
+
+// 销毁互斥锁
+int destroy_mutex() {
+    return pthread_mutex_destroy(&mutex);
+}
 
 void error(const char *msg) {
     perror(msg);

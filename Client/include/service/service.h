@@ -8,4 +8,5 @@
 void * thread(void *arg);
 void parse(char *buf);
 void parse_response();
+void parse_data();
 #endif //CHATROOM_SERVICE_H

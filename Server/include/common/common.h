@@ -5,6 +5,11 @@
 #ifndef CHATROOM_COMMON_H
 #define CHATROOM_COMMON_H
 
+void lock();
+void unlock();
+int init_mutex();
+int destroy_mutex();
+
 void error(const char *msg);
 
 void logs(const char *format, ...);
@@ -18,6 +23,7 @@ void logs(const char *format, ...);
  * @param ...
  */
 void print_colored(const char *color_code, const char *format, ...);
+
 /**
  * 对密码加密
  * @param pwd

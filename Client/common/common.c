@@ -9,18 +9,38 @@
 #include <string.h>
 #include <termios.h>
 #include <unistd.h>
+#include <pthread.h>
 #include "common/common.h"
 #include "time.h"
 
 #define MSG_LEN 1024
 
+pthread_mutex_t mutex;
+
+void lock() {
+    pthread_mutex_lock(&mutex);
+}
+
+void unlock() {
+    pthread_mutex_unlock(&mutex);
+}
+
+// 初始化互斥锁
+int init_mutex() {
+    return pthread_mutex_init(&mutex, NULL);
+}
+
+// 销毁互斥锁
+int destroy_mutex() {
+    return pthread_mutex_destroy(&mutex);
+}
 
 void error(const char *msg) {
     perror(msg);
     exit(1);
 }
 
-char* curTime() {
+char *curTime() {
     static char buffer[80]; // 静态缓冲区，用于存储格式化的时间
     time_t currentTime;
     struct tm *localTime;
@@ -117,18 +137,37 @@ void clean_last_line() {
 }
 
 
-int scanKeyboard() {
-    int in;
-    struct termios new_settings;
-    struct termios stored_settings;
-    tcgetattr(STDIN_FILENO, &stored_settings);
-    new_settings = stored_settings;
-    new_settings.c_lflag &= (~ICANON); // 设置终端为非规范模式
-    new_settings.c_cc[VTIME] = 0;
-    new_settings.c_cc[VMIN] = 1;
-    tcsetattr(STDIN_FILENO, TCSANOW, &new_settings);
-    in = getchar(); // 读取单个字符
-    tcsetattr(STDIN_FILENO, TCSANOW, &stored_settings); // 恢复设置
-    return in;
-}
 
+long get_file_size(FILE *file) {
+    long size;
+    long current_position = ftell(file); // 记录当前位置
+    if (current_position == -1) {
+        // 错误处理
+        perror("ftell error");
+        return -1;
+    }
+
+    // 将文件指针移动到文件末尾
+    if (fseek(file, 0, SEEK_END) != 0) {
+        // 错误处理
+        perror("fseek error");
+        return -1;
+    }
+
+    // 获取当前位置（文件末尾），即为文件大小
+    size = ftell(file);
+    if (size == -1) {
+        // 错误处理
+        perror("ftell error");
+        return -1;
+    }
+
+    // 恢复文件指针到原来的位置
+    if (fseek(file, current_position, SEEK_SET) != 0) {
+        // 错误处理
+        perror("fseek error");
+        return -1;
+    }
+
+    return size; // 返回文件大小
+}

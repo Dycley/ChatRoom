@@ -12,11 +12,10 @@
 #include "common/cJSON.h"
 #include "service/accountSrv.h"
 #include "service/service.h"
+#include "service/chatSrv.h"
 
 #define LISTEN_NUM 12 //连接请求队列长度
 #define MSG_LEN 1024
-
-online_t *OnlineList;
 
 
 void *thread(void *arg) {
@@ -29,6 +28,7 @@ void *thread(void *arg) {
         recv_size = 0;
         while(recv_size < MSG_LEN){
             if((ret = recv(sock_fd , buf + recv_size , MSG_LEN - recv_size, 0)) <= 0){
+
 //                int uid = Account_Srv_ChIsOnline(-1 , 0 ,client_fd);
 //                if(uid != -1){
 //                    Account_Srv_SendIsOnline(uid ,0);
@@ -73,6 +73,10 @@ void parse(int sock_fd, char *buf) {
             }else if(strcmp(item -> valuestring, "login")==0){
                 Account_Srv_Login(sock_fd, buf);
             }
+            break;
+        case DATA:
+            item = cJSON_GetObjectItem(root,"data");
+            Chat_Srv_Data_Transmit(sock_fd,buf);
             break;
         case RESPONSE:
         default:

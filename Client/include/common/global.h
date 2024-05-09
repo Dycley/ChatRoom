@@ -7,11 +7,12 @@
 
 #define MSG_LEN 1024
 
-typedef struct online{
+typedef struct AccountOnline{
     int uid;
-    int sock_fd;
-    struct online *next;
-} online_t;
+    char name[50];
+    int sex;
+    char *introduction;
+} Account;
 
 /**
  * the json's format of MsgType
@@ -23,7 +24,7 @@ typedef struct online{
  * operation{type: MsgType,operation: string, args[...]}
  */
 enum MsgType {
-    WARNING, ERROR, INFO, REQUEST, RESPONSE
+    WARNING, ERROR, INFO, REQUEST, RESPONSE, DATA
 };
 
 #endif //CHATROOM_GLOBAL_H

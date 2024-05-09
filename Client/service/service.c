@@ -11,6 +11,7 @@
 #include "common/cJSON.h"
 #include "common/global.h"
 #include "service/accountSrv.h"
+#include "service/chatSrv.h"
 
 #define MSG_LEN 1024
 extern int sock_fd;
@@ -62,6 +63,9 @@ void parse(char *buf) {
         case RESPONSE:
             parse_response();
             break;
+        case DATA:
+            parse_data();
+            break;
         case REQUEST:
         default:
             logs("Received undefined message: %s",buf);
@@ -74,9 +78,11 @@ void parse(char *buf) {
 void parse_response() {
     item = cJSON_GetObjectItem(root, "response");
     if(strcmp(item->valuestring, "register")==0){
-        Account_Srv_Register_Parse(root);
+        Account_Srv_Register_Response(root);
+        unlock();
     }else if(strcmp(item->valuestring, "login")==0){
-        Account_Srv_Login_Parse(root);
+        Account_Srv_Login_Response(root);
+        unlock();
     }
 //    if(strcmp(item->valuestring, "message")!=0){
 //        item = cJSON_GetObjectItem(root,"status-code");
@@ -88,4 +94,14 @@ void parse_response() {
 //            print_colored("yellow", cJSON_GetStringValue(item));
 //        }
 //    }
+}
+
+
+void parse_data() {
+    item = cJSON_GetObjectItem(root, "datatype");
+    if(strcmp(item->valuestring, "message")==0){
+        Chat_Srv_Recv_Msg(root);
+    }else if(strcmp(item->valuestring, "file")==0){
+        Chat_Srv_Recv_File_Msg(root);
+    }
 }

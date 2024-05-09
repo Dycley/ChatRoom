@@ -14,11 +14,7 @@
 #include "dao/accountDao.h"
 #include "common/common.h"
 
-extern online_t *OnlineList;
-
-
-int Account_Init();
-
+//extern online_t *OnlineList;
 
 int Account_Srv_Register(int sock_fd, const char *json) {
     char name[50], password[50];

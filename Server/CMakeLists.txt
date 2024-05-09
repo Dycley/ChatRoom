@@ -27,6 +27,10 @@ add_executable(chatRoom_server chatRoom_server.c
         include/service/service.h
         common/sha256.c
         include/common/sha256.h
+        dao/chatDao.c
+        include/dao/chatDao.h
+        service/chatSrv.c
+        include/service/chatSrv.h
 )
 
 file(COPY database/chatRoom.db DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/database)

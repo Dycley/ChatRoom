@@ -5,6 +5,10 @@
 #ifndef CHATROOM_COMMON_H
 #define CHATROOM_COMMON_H
 
+void lock();
+void unlock();
+int init_mutex();
+int destroy_mutex();
 
 void error(const char *msg);
 
@@ -13,6 +17,9 @@ void error(const char *msg);
  * @param format
  * @param ...
  */
+
+char* curTime();
+
 void logs(const char *format, ...);
 
 /**
@@ -41,9 +48,6 @@ void set_echo(int enable);
  */
 void clean_last_line();
 
-/**
- * 获取键盘输入
- * @return 输入键ASCII码值
- */
-int scanKeyboard();
+
+long get_file_size(FILE *file);
 #endif //CHATROOM_COMMON_H

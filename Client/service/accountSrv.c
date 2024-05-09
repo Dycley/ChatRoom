@@ -4,12 +4,21 @@
 
 #include <stdio.h>
 #include <sys/socket.h>
+#include <string.h>
 #include "service/accountSrv.h"
 #include "common/cJSON.h"
 #include "common/global.h"
 #include "common/common.h"
 
+Account account;
 extern int sock_fd;
+
+void Account_Clear() {
+    account.uid = -1;
+    memset(account.name,'\0',sizeof account.name);
+    account.sex = -1;
+    account.introduction = NULL;
+}
 
 void Account_Srv_Register(const char *name, const char *password) {
     cJSON *root = cJSON_CreateObject();
@@ -26,7 +35,7 @@ void Account_Srv_Register(const char *name, const char *password) {
 
 
 
-int Account_Srv_Register_Parse(cJSON *root) {
+int Account_Srv_Register_Response(cJSON *root) {
     cJSON *item;
     item = cJSON_GetObjectItem(root,"status-code");
     int state = item -> valueint;
@@ -44,6 +53,7 @@ int Account_Srv_Register_Parse(cJSON *root) {
         default:
             perror("Undefined status-code");
     }
+    cJSON_free(item);
     return 0;
 }
 
@@ -76,7 +86,7 @@ void Account_Srv_Login_By_Name(const char *name, const char *password) {
 }
 
 
-int Account_Srv_Login_Parse(cJSON *root) {
+int Account_Srv_Login_Response(cJSON *root) {
     cJSON *item;
     item = cJSON_GetObjectItem(root,"status-code");
     int state = item -> valueint;
@@ -84,6 +94,9 @@ int Account_Srv_Login_Parse(cJSON *root) {
         case 0:
             item = cJSON_GetObjectItem(root,"name");
             printf("用户 %s, 欢迎您!\n", item->valuestring);
+            strcpy(account.name, item->valuestring);
+            item = cJSON_GetObjectItem(root,"uid");
+            account.uid = item->valueint;
             break;
         case 1:
             print_colored("yellow", "用户名或密码错误\n");
@@ -94,5 +107,6 @@ int Account_Srv_Login_Parse(cJSON *root) {
         default:
             perror("Undefined status-code");
     }
+    cJSON_free(item);
     return 0;
 }

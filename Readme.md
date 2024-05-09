@@ -1,6 +1,6 @@
 # chatRoom
 ## Introduction
-A multi-chatroom application based on Linux.  
+A multi-chatroom program based on Linux.  
 [View the Project](https://github.com/Dycley/ChatRoom)
 
 ## Versions used
@@ -10,16 +10,16 @@ A multi-chatroom application based on Linux.
 
 ## Quick Start
 ### Check the Environment
-1. install cmake  
+1. Install cmake  
      ```shell
      sudo apt-get install cmake
      ```
-1. install sqlite3  
+1. Install sqlite3  
      ```shell
      sudo apt-get install libsqlite3-dev
      ```
 ### Build
-1. build  
+1. Build  
    From the top-level directory of the source (which contains this file), run:
     ```shell
     mkdir build

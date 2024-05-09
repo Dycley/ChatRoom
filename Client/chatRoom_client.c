@@ -14,7 +14,7 @@ int main(){
     if(fp == NULL){
         error("Error on opening file \"config.json\"\n");
     }
-    char buf[100] = {0};
+    char buf[200] = {0};
     while (!feof(fp)) //没有到文件末尾
     {
         memset(buf, 0, sizeof(buf));
@@ -31,6 +31,7 @@ int main(){
     cJSON_free(root);
 
     connect_server(host, port);
+    init_mutex();
     Hello_UI();
     return 0;
 }
