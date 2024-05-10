@@ -59,8 +59,8 @@ void logs(const char *format, ...) {
     FILE *out;
     va_list args; // 定义一个 va_list 类型的变量来存储参数列表
 
-//    out = fopen("log/log.txt","a+");
-    out = stderr;
+    out = fopen("log/log.txt","a+");
+//    out = stderr;
     if(out != NULL){
         fprintf(out,"%s ",curTime());
 
@@ -69,7 +69,7 @@ void logs(const char *format, ...) {
         va_end(args); // 清理完成的 args
 
         fprintf(out, "\n");
-//        fclose(out); // 关闭文件
+        fclose(out); // 关闭文件
     } else {
         // 如果文件无法打开，打印错误消息
         perror("无法打开文件\n");
