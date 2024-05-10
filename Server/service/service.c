@@ -101,7 +101,7 @@ void parse(int sock_fd, char *buf) {
                 }
             }else if(strcmp(item -> valuestring, "download")==0){
                 item = cJSON_GetObjectItem(root,"filename");
-                char filepath[256];
+                char filepath[500];
                 snprintf(filepath, sizeof(filepath), "%s/%s", file_save_dir, item->valuestring);
                 Chat_Srv_Send_File(sock_fd, filepath);
             }
