@@ -7,7 +7,6 @@
 #include <sys/socket.h>
 #include <stdio.h>
 #include "service/connect.h"
-#include "common/List.h"
 #include "common/global.h"
 #include "service/accountSrv.h"
 #include "common/cJSON.h"

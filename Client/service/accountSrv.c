@@ -11,6 +11,7 @@
 #include "common/common.h"
 
 Account account;
+
 extern int sock_fd;
 
 void Account_Clear() {

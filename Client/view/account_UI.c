@@ -71,7 +71,7 @@ void Login_UI() {
     int uid;
     char name[50],password[50];
     printf("登录账号\n"
-           "---------------------------\n");
+           "---------------------------------------\n");
     while (1){
         print_colored("cyan", "请选择登录方式\n");
         print_colored("green",
@@ -103,7 +103,7 @@ void Login_UI() {
                     Hello_UI();
                 return;
             case 2:
-                print_colored("cyan","输入账号:");
+                print_colored("cyan","输入用户名:");
                 scanf("%s", name);
                 clear_input_buffer();
                 print_colored("cyan","输入密码:");
@@ -138,14 +138,14 @@ void Account_Menu_UI() {
     int choice;
     print_colored("yellow","欢迎您, %s!\n", account.name);
     printf("用户菜单\n"
-           "---------------------------\n");
+           "---------------------------------------\n");
     while (1){
         print_colored("cyan", "选项:\n");
         print_colored("green",
                       "\t1. 进入聊天室"
                       "\t2. 查看个人主页\n"
-                      "\t3. 修改个人信息"
-                      "\t4. 注销登录\n");
+//                      "\t3. 修改个人信息"
+                      "\t3. 注销登录\n");
         print_colored("cyan", "请输入你的操作:");
         scanf("%d",&choice);
         clear_input_buffer();
@@ -156,9 +156,9 @@ void Account_Menu_UI() {
             case 2:
                 Account_Homepage_UI();
                 return;
+//            case 3:
+//                return;
             case 3:
-                return;
-            case 4:
                 Hello_UI();
                 return;
             default:
@@ -171,7 +171,7 @@ void Account_Menu_UI() {
 void Account_Homepage_UI() {
     Init_UI();
     printf("个人主页\n"
-           "---------------------------\n");
+           "---------------------------------------\n");
     print_colored("pink","\tUID:\t");
     print_colored("yellow","%d\n", account.uid);
     print_colored("pink","\t用户名:\t");

@@ -8,6 +8,8 @@
 #include "common/common.h"
 #include "view/hello_UI.h"
 
+char download_dir[256];
+
 int main(){
     printf("Hello Client\n");
     FILE *fp = fopen("config.json", "r");
@@ -26,6 +28,8 @@ int main(){
     item = cJSON_GetObjectItem(root,"host");
     char host[50];
     strcpy(host,item->valuestring);
+    item = cJSON_GetObjectItem(root,"download_dir");
+    strcpy(download_dir,item->valuestring);
     item = cJSON_GetObjectItem(root,"port");
     int port = item->valueint;
     cJSON_free(root);

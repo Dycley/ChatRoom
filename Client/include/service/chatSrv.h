@@ -11,7 +11,11 @@ int Chat_Srv_Send_Msg(char *msg);
 
 int Chat_Srv_Recv_Msg(cJSON *root);
 
-int Chat_Srv_Send_File_Msg(char *filepath);
+int Chat_Srv_Send_File(char *filepath);
 
 int Chat_Srv_Recv_File_Msg(cJSON *root);
+
+void Chat_Srv_Download(const char *filename);
+
+void downloadFile(int sock_fd, const char* directory, const char *filename);
 #endif //CHATROOM_CHATSRV_H

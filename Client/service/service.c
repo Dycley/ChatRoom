@@ -84,16 +84,6 @@ void parse_response() {
         Account_Srv_Login_Response(root);
         unlock();
     }
-//    if(strcmp(item->valuestring, "message")!=0){
-//        item = cJSON_GetObjectItem(root,"status-code");
-//        int state = item -> valueint;
-//        item = cJSON_GetObjectItem(root,"content");
-//        if(!state){
-//            printf("%s\n",cJSON_GetStringValue(item));
-//        }else{
-//            print_colored("yellow", cJSON_GetStringValue(item));
-//        }
-//    }
 }
 
 

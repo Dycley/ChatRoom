@@ -35,6 +35,7 @@ add_executable(chatRoom_server chatRoom_server.c
 
 file(COPY database/chatRoom.db DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/database)
 file(COPY logs/log.txt DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/log)
+file(COPY config.json DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 # 链接 SQLite3 库
 target_link_libraries(chatRoom_server ${SQLITE3_LIBRARY})

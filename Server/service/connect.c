@@ -11,22 +11,18 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include "service/connect.h"
-#include "common/List.h"
 #include "common/common.h"
 #include "common/global.h"
 #include "common/cJSON.h"
 #include "service/service.h"
 
-#define LISTEN_NUM 12 //连接请求队列长度
-
-//extern online_t *OnlineList;
+#define LISTEN_NUM 20 //连接请求队列长度
 
 void connect_client(int port) {
     int sock_fd;
     int client_fd;
     int len;
     int optval;
-//    List_Init(OnlineList , online_t);
     struct sockaddr_in serv_addr , client_addr;
     len = sizeof(struct sockaddr_in);
     memset(&serv_addr , 0 ,len);

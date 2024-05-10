@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <netinet/in.h>
-#include "common/List.h"
 #include "common/common.h"
 #include "common/global.h"
 #include "common/cJSON.h"
@@ -17,6 +16,37 @@
 #define LISTEN_NUM 12 //连接请求队列长度
 #define MSG_LEN 1024
 
+Account accountArr[MAX_ACCOUNT];
+int account_cnt;
+extern char file_save_dir[256];
+
+
+void set_account_offline(int sock_fd) {
+    for(int i=0;i<account_cnt;i++){
+        if(accountArr[i].sock_fd==sock_fd){
+            accountArr[i].status = 0;
+            accountArr[i].sock_fd = -1;
+            logs("Account who's uid: %d signed out",accountArr[i].uid);
+            break;
+        }
+    }
+}
+
+void add_account(int uid, int sock_fd) {
+    int i;
+    for(i=0;i<account_cnt;i++){
+        if(accountArr[i].uid == uid){
+            accountArr[i].status = 1;
+            break;
+        }
+    }
+    if(i==account_cnt){
+        accountArr[i].uid = uid;
+        accountArr[i].sock_fd = sock_fd;
+        accountArr[i].status = 1;
+        account_cnt++;
+    }
+}
 
 void *thread(void *arg) {
     int sock_fd=(int)(long)arg;
@@ -28,13 +58,8 @@ void *thread(void *arg) {
         recv_size = 0;
         while(recv_size < MSG_LEN){
             if((ret = recv(sock_fd , buf + recv_size , MSG_LEN - recv_size, 0)) <= 0){
-
-//                int uid = Account_Srv_ChIsOnline(-1 , 0 ,client_fd);
-//                if(uid != -1){
-//                    Account_Srv_SendIsOnline(uid ,0);
-//                    //向在线好友发送下线通知
-//                }
-                perror("Error on receiving");
+                set_account_offline(sock_fd);
+//                perror("Error on receiving");
                 return NULL;
             }
             recv_size += ret;
@@ -71,7 +96,13 @@ void parse(int sock_fd, char *buf) {
             if(strcmp(item -> valuestring, "register")==0){
                 Account_Srv_Register(sock_fd,buf);
             }else if(strcmp(item -> valuestring, "login")==0){
-                Account_Srv_Login(sock_fd, buf);
+                if(Account_Srv_Login(sock_fd, buf)>=0){
+                    item = cJSON_GetObjectItem(root,"uid");
+                    add_account(item->valueint, sock_fd);
+                }
+            }else if(strcmp(item -> valuestring, "download")==0){
+                item = cJSON_GetObjectItem(root,"filename");
+                Chat_Srv_Send_File(sock_fd, file_save_dir, item->valuestring);
             }
             break;
         case DATA:

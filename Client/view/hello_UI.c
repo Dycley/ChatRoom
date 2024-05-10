@@ -16,10 +16,10 @@ int isInRoom;
 void Init_UI() {
     system("clear");
     isInRoom = 0;
-    print_colored("green","+++++++++++++++++++++++++++\n");
-    print_colored("blue","+ Welcome to the chatRoom +\n");
-    print_colored("pink","+\t 欢迎使用小煤球聊天室 \t  +\n");
-    print_colored("green","+++++++++++++++++++++++++++\n");
+    print_colored("green","+++++++++++++++++++++++++++++++++++++++\n");
+    print_colored("blue","+\tWelcome to the chatRoom\t      +\n");
+    print_colored("pink","+\t  欢迎使用小煤球聊天室 \t      +\n");
+    print_colored("green","+++++++++++++++++++++++++++++++++++++++\n");
 }
 
 void Hello_UI() {
