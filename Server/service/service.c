@@ -97,7 +97,6 @@ void parse(int sock_fd, char *buf) {
                 Account_Srv_Register(sock_fd,buf);
             }else if(strcmp(item -> valuestring, "login")==0){
                 if(Account_Srv_Login(sock_fd, buf)>=0){
-                    item = cJSON_GetObjectItem(root,"uid");
                     add_account(item->valueint, sock_fd);
                 }
             }else if(strcmp(item -> valuestring, "download")==0){

@@ -59,8 +59,8 @@ int Account_Check_Name_Pwd(const char *name, const char *password) {
 
     if (rc == SQLITE_ROW) {
         char *hashed_pwd = hash_pwd(password);
-        char *selected_pwd = sqlite3_column_text(res,0);
-        int eql = strcmp(hashed_pwd,selected_pwd) != 0;
+        const unsigned char *selected_pwd = sqlite3_column_text(res,0);
+        int eql = strcmp(hashed_pwd,(const char *)selected_pwd) != 0;
         sqlite3_finalize(res);
         return eql;
     } else {
@@ -90,8 +90,8 @@ int Account_Check_Uid_Pwd(int uid, const char *password) {
 
     if (rc == SQLITE_ROW) {
         char *hashed_pwd = hash_pwd(password);
-        char *selected_pwd = sqlite3_column_text(res,0);
-        int eql = strcmp(hashed_pwd,selected_pwd) != 0;
+        const unsigned char *selected_pwd = sqlite3_column_text(res,0);
+        int eql = strcmp(hashed_pwd,(const char *)selected_pwd) != 0;
         sqlite3_finalize(res);
         return eql;
     } else {
@@ -103,7 +103,7 @@ int Account_Check_Uid_Pwd(int uid, const char *password) {
     return -1;
 }
 
-int Account_Get_Uid_By_Name(char *name) {
+int Account_Get_Uid_By_Name(const char *name) {
     sqlite3_stmt *res;
     char *sql = "SELECT uid FROM account WHERE name = @name";
     int rc = sqlite3_prepare_v2(db, sql, -1, &res, 0);

@@ -29,13 +29,17 @@ A multi-chatroom program based on Linux.
     ```
 ### Run
 1. Run the server  
+   From the top-level directory of the source (which contains this file), run:
     ```shell
-    ./Server/chatRoom_server
+   cd build/Server
+    ./chatRoom_server
     ```
 
 2. Run the client  
+   From the top-level directory of the source (which contains this file), run:
     ```shell
-    ./Client/chatRoom_client
+   cd build/Clinet
+    ./chatRoom_client
     ```
 
    

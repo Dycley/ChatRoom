@@ -163,7 +163,6 @@ void downloadFile(int sock_fd, const char *directory, const char *filename) {
     }
     int bytesReceived = 0;
     while (bytesReceived < fileSize) {
-        puts("1");
         iResult = recv(sock_fd, recvBuffer + bytesReceived, fileSize - bytesReceived, 0);
         if (iResult == -1) {
             logs("recv file content failed");
@@ -192,7 +191,7 @@ void downloadFile(int sock_fd, const char *directory, const char *filename) {
     write(filefd, recvBuffer, fileSize);
     close(filefd);
 
-    logs("文件 \"%s\" 下载完成!\n", filename);
+    print_colored("yellow","文件 \"%s\" 下载完成!\n", filename);
 
     // 关闭连接
     free(recvBuffer);

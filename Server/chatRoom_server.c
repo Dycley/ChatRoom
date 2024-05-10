@@ -16,7 +16,7 @@ int main(){
     printf("Hello Server\n");
     FILE *fp = fopen("config.json", "r");
     if(fp == NULL){
-        error("Error on opening file \"config.json\"\n");
+        error("Error on opening file \"config.json\"");
     }
     char buf[200] = {0};
     while (!feof(fp)) //没有到文件末尾

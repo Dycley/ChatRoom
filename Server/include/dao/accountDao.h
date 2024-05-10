@@ -28,7 +28,7 @@ int Account_Check_Uid_Pwd(int uid, const char *password);
  * @param name
  * @return uid of account
  */
-int Account_Get_Uid_By_Name(char *name);
+int Account_Get_Uid_By_Name(const char *name);
 
 char* Account_Get_Name_By_Uid(int uid);
 #endif //CHATROOM_ACCOUNTDAO_H
