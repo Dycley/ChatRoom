@@ -12,6 +12,7 @@
 #include "service/accountSrv.h"
 #include "service/service.h"
 #include "service/chatSrv.h"
+#include "dao/accountDao.h"
 
 #define LISTEN_NUM 12 //连接请求队列长度
 #define MSG_LEN 1024
@@ -97,7 +98,17 @@ void parse(int sock_fd, char *buf) {
                 Account_Srv_Register(sock_fd,buf);
             }else if(strcmp(item -> valuestring, "login")==0){
                 if(Account_Srv_Login(sock_fd, buf)>=0){
-                    add_account(item->valueint, sock_fd);
+                    int uid = -1;
+                    item = cJSON_GetObjectItem(root,"method");
+                    if(strcmp(item->valuestring,"uid")==0){
+                        item = cJSON_GetObjectItem(root,"uid");
+                        uid = item ->valueint;
+                    }else if(strcmp(item->valuestring,"name")==0){
+                        item = cJSON_GetObjectItem(root,"name");
+                        char *name = item->valuestring;
+                        uid = Account_Get_Uid_By_Name(name);
+                    }
+                    add_account(uid, sock_fd);
                 }
             }else if(strcmp(item -> valuestring, "download")==0){
                 item = cJSON_GetObjectItem(root,"filename");

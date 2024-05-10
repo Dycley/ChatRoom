@@ -60,6 +60,7 @@ int Chat_Srv_Data_Transmit(int sock_fd, char *json) {
     Chat_Save_Msg(uid,msgtype,message, timestamp);
     json = cJSON_Print(root);
     for(int i=0;i<account_cnt;i++){
+//        printf("uid %d st%d fd%d\n",accountArr[i].uid,accountArr[i].status,accountArr[i].sock_fd);
         if (accountArr[i].status)
             if(send(accountArr[i].sock_fd,(void *)json,MSG_LEN,0)<0){
     //            return -1;
