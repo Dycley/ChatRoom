@@ -53,6 +53,7 @@ void parse(char *buf) {
         case WARNING:
             item = cJSON_GetObjectItem(root,"content");
             print_colored("yellow","%s\n",cJSON_GetStringValue(item));
+            unlock();
             // 警告信息
             break;
         case INFO:
@@ -93,5 +94,7 @@ void parse_data() {
         Chat_Srv_Recv_Msg(root);
     }else if(strcmp(item->valuestring, "file")==0){
         Chat_Srv_Recv_File_Msg(root);
+    }else if(strcmp(item->valuestring,"file-download")==0){
+        Chat_Srv_Download(root);
     }
 }
