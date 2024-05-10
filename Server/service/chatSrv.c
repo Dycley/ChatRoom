@@ -126,58 +126,6 @@ int Chat_Srv_Send_File(int sock_fd, char *filepath) {
     return 0;
 }
 
-//int Chat_Srv_Send_File(int sock_fd, const char *directory, const char *filename) {
-//    char filepath[256];
-//    snprintf(filepath, sizeof(filepath), "%s/%s", directory, filename);
-//    // 打开待传输的文件
-//    int filefd = open(filepath, O_RDONLY);
-//    if (filefd == -1) {
-//        perror("Failed to open file");
-////        close(sock_fd);
-////        exit(1);
-//        return -1;
-//    }
-//
-//    // 获取文件大小
-//    struct stat fileInfo;
-//    if (fstat(filefd, &fileInfo) == -1) {
-//        perror("Error getting the file size");
-//        close(filefd);
-////        close(sock_fd);
-////        exit(1);
-//        return -1;
-//    }
-//    off_t fileSize = fileInfo.st_size;
-//
-//    // 发送文件大小信息
-//    ssize_t iResult = send(sock_fd, &fileSize, sizeof(fileSize), 0);
-//    if (iResult == -1) {
-//        perror("send file size failed");
-//        close(filefd);
-//        close(sock_fd);
-//        exit(1);
-//    }
-//
-//    // 发送文件内容
-//    off_t offset = 0; // 用于sendfile函数的偏移量
-//    ssize_t bytesSent = 0;
-//    while (offset < fileSize) {
-//        bytesSent = sendfile(sock_fd, filefd, &offset, fileSize - offset);
-//        if (bytesSent == -1) {
-//            perror("send file content failed");
-//            close(filefd);
-////            close(sock_fd);
-////            exit(1);
-//            return -1;
-//        }
-//    }
-//
-//    logs("File \"%s\" send successfully.\n", filename);
-//
-//    // 关闭文件
-//    close(filefd);
-//    return 0;
-//}
 
 void downloadFile(int sock_fd, off_t fileSize, const char* directory, const char *filename) {
     size_t iResult;
